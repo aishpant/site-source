@@ -1,0 +1,16 @@
+baseURL = "https://aishpant.github.io/"
+languageCode = "en-us"
+title = "Aishwarya Pant"
+theme = "onetwothree"
+
+contentDir = "content"
+layoutDir = "layouts"
+publishDir = "public"
+buildDrafts = false
+
+[params]
+    twitter = "aishpant"
+    navigation = ["about.md"]
+
+[taxonomies]
+    tag = "tags"
