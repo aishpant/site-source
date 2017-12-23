@@ -1,27 +1,20 @@
 
-<header>
-<a href="/">/posts</a>
-{{ range $.Site.Params.navigation }}{{ with $.Site.GetPage "page" . }}
-&nbsp;·&nbsp;&nbsp;<a href="{{ lower .Permalink }}" style="color:black;">/{{ .Title }}</a>
-{{ end }}{{ end }}
 
-{{ if .Draft }}
-DRAFT
-{{ end }}
-</header>
 
 <div class="content">
+<h1>{{ title .Data.Term  }} posts</h1>
     {{ range first 100000 .Pages }}
     {{ if eq .Type "post"}}
         <p>
         <aside>{{ .Date.Format "January 2, 2006"}} 
-            {{ if .Params.tags }}
+            <!--{{ if .Params.tags }}
             /// <em>{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}<a href="/tags/{{$e}}/">{{ $e }}</a>{{ end }}
                 </em>
 
-            {{ end }}
+            {{ end }}-->
         </aside>
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
+        <a href="{{ .Permalink }}" style="color:black;">{{ .Title }}</a>{{ if .Draft }} <span style="color:#FF4136;">(unpublished)</span>
+{{ end }}
         </p>
     {{ end }}
     {{ end }}

@@ -7,10 +7,12 @@ contentDir = "content"
 layoutDir = "layouts"
 publishDir = "public"
 buildDrafts = false
+googleAnalytics = "UA-111558627-1"
 
 [params]
     twitter = "aishpant"
     navigation = ["about.md"]
+    style = "3"
 
 [taxonomies]
     tag = "tags"
