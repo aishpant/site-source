@@ -6,13 +6,13 @@ tags: ["outreachy"]
 
 This is my last week at [@Flipkart](https://flipkart.com)! Thursday- November
 30th will be my last day of work, after which I go on a 4-month sabbatical. I
-will have to return all my IT assets including my beloved MacBook Pro :-( 
+will have to return all my IT assets including my beloved MacBook Pro :-(
 
 Back to the Outreachy excitement! There are a lot of things I want to get done
 before the internship officialy starts on the December 5. I have started to
 maintain a [journal](https://github.com/aishpant/Journal) of what I am going to
 be working on every day. (Thanks to [@jaseemabid](http://twitter.com/jaseemabid)
-for the inspiration who was in turn inspired by @recursecenter). The idea of the
+for the inspiration who was in turn inspired by [@recursecenter](https://www.recurse.com/). The idea of the
 journaling is to:
 
 1. Celebrate openness? I am going to be working full-time on FOSS (for the very

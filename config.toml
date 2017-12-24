@@ -9,6 +9,9 @@ publishDir = "public"
 buildDrafts = false
 googleAnalytics = "UA-111558627-1"
 
+[permalinks]
+  post = "/:year/:month/:title/"
+
 [params]
     twitter = "aishpant"
     navigation = ["about.md"]
