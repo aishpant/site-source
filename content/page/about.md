@@ -13,7 +13,7 @@ ul{list-style-position:inside;}
 </style>
 
 <p>
-<img src="/images/img2.jpeg" style="width: 200px;" class="left"/>
+<img src="/images/img2.jpeg" alt="photo from Ziro" style="width: 200px;" class="left"/>
 
 Hello! I am <b>Aishwarya Pant</b>, a Software Engineer at <a href="https://flipkart.com">Flipkart</a>.
 Currently, I am on a four month sabbatical to work on improving attribute
