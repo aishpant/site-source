@@ -1,7 +1,7 @@
 baseURL = "https://aishpant.github.io/"
 languageCode = "en-us"
 title = "Aishwarya Pant"
-theme = "onetwothree"
+theme = "minimo"
 
 contentDir = "content"
 layoutDir = "layouts"
@@ -9,13 +9,65 @@ publishDir = "public"
 buildDrafts = false
 googleAnalytics = "UA-111558627-1"
 
-[permalinks]
-  post = "/:year/:month/:title/"
+Paginate = 7
+preserveTaxonomyNames = true
 
-[params]
-    twitter = "aishpant"
-    navigation = ["about.md"]
-    style = "3"
+enableRobotsTXT = true # generate robots.txt
+
+# Syntax Highlighting ( https://gohugo.io/content-management/syntax-highlighting/ )
+pygmentsCodefences = true
+
+# Missing translations will default to this content language
+defaultContentLanguage = "en"
+
+[params.info]
+description = "Outreachy intern with Linux Kernel | Flipkart | IIITDelhi | Becoming human | Pant wearer | Currently reading 📖"
+title404 = "Nothing's here!"
+
+[params.assets]
+favicon = "favicon.ico"
+customCSS = ["css/custom.css"]
+customJS = ["js/custom.js"]
+gopher = "" # used in 404 template ( Generator: https://gopherize.me )
+
+[params.settings]
+# date & time format: https://golang.org/pkg/time/
+dateFormat = "Jan 02, 2006"
+listDateFormat = "Jan 02, 2006"
+hideEntryNavigation = ["page"] # boolean / array of sections
+recentPostsLength = 4
+hideSocialMenu = false
+showReadingTime = true
+noTermCloudShuffle = false
+
+[params.seo]
+# Title Separator: - – — · • * ⋆ | ~ « » < >
+titleSeparator = "•"
+
+[params.social]
+email = "aishpant@gmail.com"
+facebook = "pantaish"
+github = "aishpant"
+instagram = "aishpant"
+twitter = "aishpant"
+
+[params.social.config]
+platforms = ["github","facebook","twitter","instagram","email"]
 
 [taxonomies]
-    tag = "tags"
+author = "authors"
+category = "categories"
+tag = "tags"
+
+[permalinks]
+page = "/:slug/"
+
+[blackfriday]
+hrefTargetBlank = true
+
+[languages]
+# edit this block for your own language
+[languages.en]
+lang = "en"
+languageName = "English"
+weight = 1
