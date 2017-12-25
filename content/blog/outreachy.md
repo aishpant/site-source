@@ -74,5 +74,5 @@ If you're eligible, you should definitely apply.
 
 Got any questions? Confused about the application process? Or about contributing
 to the Linux Kernel? I would be happy to help. Drop me a
-[mail](mailto:aishpant@gmail.com) or get in in touch with me on
+[mail](mailto:aishpant@gmail.com) or get in touch with me on
 [Twitter](https://twitter.com/aishpant).
