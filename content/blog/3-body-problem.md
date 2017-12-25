@@ -1,7 +1,7 @@
 ---
-title: "Book Review : Three Body Problem"
+title: "Book Review : The Three Body Problem"
 date: 2017-12-25T02:17:46+05:30
-tags: ["book review", "science fiction"]
+tags: ["book review", "science fiction", "thoughts"]
 slug: "three body problem review"
 cover:
   image: /images/three-body.jpg

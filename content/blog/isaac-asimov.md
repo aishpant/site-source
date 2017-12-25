@@ -1,7 +1,7 @@
 ---
 title: "I am done reading Isaac Asimov"
 date: 2017-12-25T02:29:22+05:30
-tags: ["book review", "isaac asimov"]
+tags: ["book review", "isaac asimov", "thoughts"]
 slug: ""
 cover:
   image: /images/asimov.jpg
@@ -30,7 +30,7 @@ course an imitation of men- strong, reliable, physically resembling men.) There
 was one female character in I, Robot- Susan Calvin. She is the world's best
 robot-psychologist. Extremely intelligent. But there was one quality about her
 that Asimov kept beating us in the head with every time she came up in a scene-
-her lack of physical beauty. I calling it out because no other character (read:
+her lack of physical beauty. I am calling it out because no other character (read:
 male) had any physical shortcomings because they were not mentioned. Maybe there
 was one guy who was bald and one has red hair. But that was it. No judgment. Ah
 I forget, there was a fleeting mention of another woman who was very pretty and
