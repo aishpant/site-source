@@ -159,7 +159,7 @@ Want to know more?
 
 1. [Kernel Recipes 2016 - Linux Device Model - Greg KH](https://www.youtube.com/watch?v=AdPxeGHIZ74)
 2. [How to create a sysfs file correctly (2013)](http://kroah.com/log/blog/2013/06/26/how-to-create-a-sysfs-file-correctly/)
-3. This is a bit of ancient history: [The Linux Device Model - Chapter 14 Linux Device Drivers](https://static.lwn.net/images/pdf/LDD3/ch14.pdf)
+3. This is a bit of ancient history: [The Linux Device Model - Chapter 14 Linux Device Drivers (2005)](https://static.lwn.net/images/pdf/LDD3/ch14.pdf)
 
 [^1]: For an approximate number look at: `arch/m32r/kernel/syscall_table.S`
 [^2]: I don't know if this deduplicates symlinks: `find /sys -type f | wc -l`
