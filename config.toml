@@ -10,7 +10,6 @@ buildDrafts = false
 googleAnalytics = "UA-111558627-1"
 
 Paginate = 7
-preserveTaxonomyNames = true
 
 enableRobotsTXT = true # generate robots.txt
 
@@ -35,7 +34,7 @@ gopher = "" # used in 404 template ( Generator: https://gopherize.me )
 dateFormat = "Jan 02, 2006"
 listDateFormat = "Jan 02, 2006"
 hideEntryNavigation = ["page"] # boolean / array of sections
-recentPostsLength = 4
+recentPostsLength = 5
 hideSocialMenu = false
 showReadingTime = true
 noTermCloudShuffle = false
