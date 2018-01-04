@@ -21,11 +21,12 @@ API interaction is source code and for ABI it is binary executables.
 An API might be something you are more familiar with. For eg. the public methods
 and data structures of a Java class.
 
-An ABI is hardware and platform dependent. This is the definition from Linux
-Programming Interface: Among other things, an ABI specifies which registers and
-stack locations are used to exchange this information, and what meaning is
-attached to the exchanged value. Once compiled for a particular ABI, a binary
-executable should be able to run on any system presenting the same ABI.
+An ABI is hardware and platform dependent. This is the definition from [The Linux
+Programming Interface](http://man7.org/tlpi/): Among other things, an ABI
+specifies which registers and stack locations are used to exchange this
+information, and what meaning is attached to the exchanged value. Once compiled
+for a particular ABI, a binary executable should be able to run on any system
+presenting the same ABI.
 
 The one above is a more general definition. The **Linux ABI** defines how
 userspace communicates with the kernel - `syscalls`, pseudo file systems (`procfs`,
@@ -71,7 +72,7 @@ drwxr-xr-x   2 root root 0 Dec 25 19:42 power
 
 The directories under `sysfs` export information about the internal kernel data
 structures and layout. It provides a hierarchial view of the device structure
-under `/sys/devices`. Each directory in `sysfs` is a kbobject (kernel object) and
+under `/sys/devices`. Each directory in `sysfs` is a kobject (kernel object) and
 the files in a directory are the attributes of a kobject.
 
 What are kobjects? You actually don't need to work with or know internals of
@@ -97,12 +98,12 @@ version 2.5 with the unification of the device model.
 
 In summary:
 
-* Reflects kernel's internal device model
-* Not real files!
-* Lives in memory
+* The `sysfs` reflects the kernel's internal device model.
+* It lives in memory.
+* What you see is not real files! They don't exist on your disk.
 * Subsystems like class, bus, block etc are just grouping of devices by
   connection to bus type, functionality, device type etc.
-* Redundancy is avoided by using symlinks
+* Redundancy is avoided by using symlinks.
 * This ABI is huge! Which also makes it difficult to maintain :-(
 
 ```bash
@@ -115,7 +116,7 @@ lrwxrwxrwx 1 root root 0 Dec  21 17:02 hwmon1 -> ../../devices/virtual/hwmon/hwm
 lrwxrwxrwx 1 root root 0 Dec  21 17:02 hwmon2 -> ../../devices/platform/coretemp.0/hwmon/hwmon2
 ```
 Example of symlinking. Hardware monitoring devices are grouped by functionality under
-/sys/class/hwmon and symlinked to entries under /sys/dev.
+/sys/class/hwmon and symlinked to entries under /sys/devices.
 
 #### What is my project about?
 
@@ -137,23 +138,22 @@ The goal is to use scripting tools like
 [coccinelle](http://coccinelle.lip6.fr/:Coccinelle) to collect information about
 various parts that are needed to fill this.
 
-How can this be filled?
+How can this be filled in?
 
 1. The Date, KernelVersion can be extracted from the commit that introduced it.
    Date is the author commit date and KernelVersion is the first release version
    tag that contains the commit.
 2. The Contact person may perhaps be the module author but could also be a
    subsystem specific mailing list (mm, rtc, usb).
-3. The full attribute path and the description are the hard parts to fill.
+3. The full attribute path and the description are the hard parts to fill.  The
    Description can be in a commit message or documented along with the driver
    (but not in the ABI). Some hints can be in the code surrounding the attribute
-   declaration. Or in the description of the field ut might map to in a
+   declaration. Or in the description of the field that it might map to in a
    structure.
-4. The attribute path i.e. What, is equally harder. The official path for attributes varies
-   in every subsystem. Some prefer a class path or a bus path or a devices one.
-   There are only a few ways to create a class device attribute (by declaring a
-   struct class or using class\_create()). Again, coccinelle should be helpful
-   here.
+4. The official path for attributes, the field What, varies in every subsystem.
+   Some prefer a class path or a bus path or a devices one. There are only a few
+   ways to create a class device attribute (by declaring a struct class or using
+   class\_create()). Again, coccinelle should be helpful here.
 
 Want to know more?
 
