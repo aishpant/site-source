@@ -44,7 +44,7 @@ test new interfaces. And this is why **both testing and documentation efforts ar
 essential for kernel development**.
 
 Since breaking userspace is not acceptable, backward compatibilty is guaranteed
-for 2 years for interfaces documented in `Documentation/ABI/stable`.
+for 2 years for interfaces documented in [`Documentation/ABI/stable`](https://www.kernel.org/doc/Documentation/ABI/README).
 
 ## sysfs file system
 
@@ -72,7 +72,7 @@ drwxr-xr-x   2 root root 0 Dec 25 19:42 power
 
 The directories under `sysfs` export information about the internal kernel data
 structures and layout. It provides a hierarchial view of the device structure
-under `/sys/devices`. Each directory in `sysfs` is a kobject (kernel object) and
+under `/sys/devices`. Each directory in `sysfs` is a [kobject](https://www.kernel.org/doc/Documentation/kobject.txt) (kernel object) and
 the files in a directory are the attributes of a kobject.
 
 What are kobjects? You actually don't need to work with or know internals of
@@ -92,7 +92,7 @@ Unlike `syscalls` which are generally stable, forming the bulk of the userspace
 ABI and well-documented through the [linux manpages
 project](https://www.kernel.org/doc/man-pages/), it is possible for `sysfs`
 interfaces to change in an incompatible way between release versions.  There are
-around 325 `syscalls`[^1] whereas I can see about 30,000 `sysfs` files[^2] on my
+around 332 `syscalls`[^1] whereas I can see about 30,000 `sysfs` files[^2] on my
 laptop. **This is massive**, having only been introduced in kernel release
 version 2.5 with the unification of the device model.
 
@@ -161,6 +161,6 @@ Want to know more?
 2. [How to create a sysfs file correctly (2013)](http://kroah.com/log/blog/2013/06/26/how-to-create-a-sysfs-file-correctly/)
 3. This is a bit of ancient history: [The Linux Device Model - Chapter 14 Linux Device Drivers (2005)](https://static.lwn.net/images/pdf/LDD3/ch14.pdf)
 
-[^1]: For an approximate number look at: `arch/m32r/kernel/syscall_table.S`
+[^1]: Look at [`arch/x86/entry/syscalls/syscall_64.tbl`](https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl) in the source code.
 [^2]: I don't know if this deduplicates symlinks: `find /sys -type f | wc -l`
 [^3]: I used a cocci script to identify all the standard attribute declarers (`DEVICE_ATTR, DEVICE_ATTR_{RO/RW/WO}`) using the already documented attributes. Then, I used another script to identify all declared attributes using the previously found macros and the position where the attributes are present.
