@@ -57,6 +57,7 @@ platforms = ["github","facebook","twitter","instagram","email"]
 author = "authors"
 category = "categories"
 tag = "tags"
+preserveTaxonomyNames = false
 
 [permalinks]
 page = "/:slug/"
