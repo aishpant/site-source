@@ -1,8 +1,11 @@
 ---
-title: "how to deal with LKML = offlineimap + mutt"
+title: "offlineimap + mutt = how to deal with LKML"
 date: 2018-01-09T22:12:00+05:30
 tags: ["mutt", "offlineimap", "lkml"]
 slug: "mailing-lists"
+cover:
+  image: /images/mutt.png
+  style: normal
 ---
 
 [LKML](http://vger.kernel.org/lkml/) is a _very_ high volume mailing list. I
