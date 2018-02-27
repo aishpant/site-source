@@ -45,9 +45,7 @@ titleSeparator = "•"
 
 [params.social]
 email = "aishpant@gmail.com"
-facebook = "pantaish"
 github = "aishpant"
-instagram = "aishpant"
 twitter = "aishpant"
 
 [params.social.config]
