@@ -11,8 +11,25 @@ This is the last week of my three-month internship with
 ##### Did I accomplish what I had set out to do?
 
 In some ways, yes. I have written a helper tool that tries to generate and
-formats sysfs style documentation. Link to the project - [attribute
-documentation](https://github.com/aishpant/attribute-documentation).
+formats sysfs style documentation. Link to the project -
+[abi2doc](https://github.com/aishpant/attribute-documentation).
+
+From a [rough
+estimate](https://github.com/aishpant/documentation-scripts/blob/master/result/output.csv)[^1],
+there are around 2000 attributes that are undocumented in the kernel. Using
+`abi2doc`, I have added documentation for **312** sysfs attributes. A list of my
+documentation patches is available
+[here](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=author&q=Aishwarya+Pant).
+
+Plotted[^2] below is a graph of the number of documented attributes in all the stable kernel
+versions. The next kernel release 4.16 should have `2867` or more documented attributes compared to
+`2442` from Linux 4.15.
+
+<div>
+<img src="/images/sysfs_line_plot.jpeg" alt="plot of number of documented attributes per kernel release" style="max-width: 100%;width: 600px;"  width="600" />
+</div>
+
+Yep, the steep line at the top are some of my patches!
 
 As I mentioned in a [previous
 post](https://aishpant.github.io/blog/attribute-documentation/), the ABI
@@ -24,67 +41,59 @@ KernelVersion: (kernel version it first showed up in)
 Contact: (primary contact)  
 Description: (long description on usage)
 
-The scripts under this project can fill in the 'Date' and the 'KernelVersion'
-fields with high accuracy. The 'Contact' details is prompted for once, and the
-others 'What' and 'Description' are prompted for every attribute.
+`abi2doc` can fill in the `'Date'` and the `'KernelVersion'` fields with high
+accuracy. The `'Contact'` details are prompted once per script run, and the
+others `'What'` and `'Description'` are prompted on every attribute.
 
 Descriptions are collected from various sources:
 
 * From the commit message that introduced the attribute.
 
-* If suppose documentation is present somewhere, plain old grep for the
-  attribute name in the Documentation folder.
-
-* Comments around the attribute declaring macro and the attribute show/store
-  functions.
+* From the comments around the attribute declaring macro and the attribute
+  show/store functions.
 
 * From the structure fields that map to the attribute.
 
-  For example - the attribute show functions usually look like this:
-```c
-        static ssize_t
-        port_destid_show(struct device *dev, struct device_attribute *attr,
-                         char *buf)
-        {
-                struct rio_mport *mport = to_rio_mport(dev);
+	For eg. consider the attribute declaring macro `PORT_RO(dest_id)` and
+	its show function `port_destid_show(...)`.
 
-                if (mport)
-                        return sprintf(buf, "0x%04x\n", mport->host_deviceid);
-                else
-                        return -ENODEV;
-        }
-```
-  There is a conversion to a driver private struct and then one or many fields from
-  it are put in the buffer.
+	```c
+	static ssize_t
+	port_destid_show(struct device *dev, struct device_attribute *attr,
+			 char *buf)
+	{
+		struct rio_mport *mport = to_rio_mport(dev);
 
-  In the example above, it's a struct of type `rio_mport`.
-```c
+		if (mport)
+			return sprintf(buf, "0x%04x\n", mport->host_deviceid);
+		else
+			return -ENODEV;
+	}
+	```
+
+	The attribute show functions typically contain a conversion to a driver
+	private struct and then one or many fields from it are put in the
+	buffer.
+
+	In the example above, the driver private structure is of type
+	`rio_mport` and the attribute `port_id` maps to the field
+	`host_deviceid` in the structure.
+
+	```c
   struct rio_mport {
-        ...
-        int host_deviceid;      /* Host device ID */
-        struct rio_ops *ops;    /* low-level architecture-dependent routines */
-        unsigned char id;       /* port ID, unique among all ports */
-        ...
-        };
-```
-  There's a comment against `host_deviceid` here and this can be extracted using
-  coccinelle.
-
-Using these scripts, I have added documentation for **312** sysfs attributes. I
-hope to add some more in the coming week. A list of my documentation patches is
-available
-[here](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=author&q=Aishwarya+Pant).
-
-<div>
-<img src="/images/sysfs_line_plot.jpeg" alt="plot of number of documented attributes per kernel release" style="max-width: 100%;width: 600px;"  width="600" />
-</div>
-
-Yep, the steep line at the top are some of my patches! These should be a part of
-the 4.16 kernel release.
+	...
+	int host_deviceid;      /* Host device ID */
+	struct rio_ops *ops;    /* low-level architecture-dependent routines */
+	unsigned char id;       /* port ID, unique among all ports */
+	...
+	};
+	```
+	  There's a comment against `host_deviceid` here and this can be
+	  extracted using coccinelle.
 
 I was hoping to build something that would fill in all parts of the
-documentation. But, automatic generation of documentation is kind of a
-fantastical idea.
+documentation i.e. the full attribute path and a concise description. But,
+automatic generation of documentation is kind of a fantastical idea.
 
 ##### Usage
 
@@ -94,27 +103,80 @@ Prerequisites:
 - Python 3
 - Linux Kernel source code
 
-First, you need to clone the GitHub
-[project](https://github.com/aishpant/attribute-documentation). The `make doc`
-command needs two options to run - path to the kernel source file or directory
-which needs documentation, and the path to the kernel source code base.
+abi2doc is available on [PYPI](https://pypi.python.org/pypi/abi2doc). Install with `pip`:
 
 ```bash
-$ make doc FILE=$(source file or directory) KERNEL_PATH=$(path to kernel source)
-$ make clean # clean temporary & generated files
+pip install abi2doc
+```
+
+The library is currently tested against Python versions `3.4+` and intended to
+run inside the kernel source.
+
+```bash
+usage: abi2doc [-h] -f SOURCE_FILE -o OUTPUT_FILE
+
+Helper for documenting Linux Kernel sysfs attributes
+
+required arguments:
+  -f SOURCE_FILE  linux source file to document
+  -o OUTPUT_FILE  location of the generated sysfs ABI documentation
+
+optional arguments:
+  -h, --help      show this help message and exit
 ```
 
 Example usage - if I want to document sysfs interface of the lp855x series
 backlight driver, I will run the following command:
 
 ```bash
-$ make doc FILE=~/projects/linux/drivers/video/backlight/lp855x_bl.c KERNEL_PATH=~/projects/linux
+abi2doc -f drivers/video/backlight/lp855x_bl.c -o sysfs_doc.txt
 ```
 
-While `make doc` runs, it will create a `description.txt` file containing
-possible descriptions for the attributes. You will need to refer to it while
-filling in the documentation. The formatted documentation is appended to a file
-named `sysfs_doc`.
+The script will fill in the `'Date'` and the `'KernelVersion'` fields for found
+attributes. The `'Contact'` details are  prompted once per script run, and the
+others `'What'` and `'Description'` are prompted on every attribute. The entered
+description will be followed by hints, as shown in the generated documentation
+below.
+
+```
+What:       /sys/class/backlight/<backlight>/bled_mode
+Date:       Oct, 2012
+KernelVersion:  3.7
+Contact:    dri-devel@lists.freedesktop.org
+Description:
+        (WO) Write to the backlight mapping mode. The backlight current
+        can be mapped for either exponential (value "0") or linear
+        mapping modes (default).
+        --------------------------------
+        %%%%% Hints below %%%%%
+        bled_mode DEVICE_ATTR drivers/video/backlight/lm3639_bl.c 220
+        --------------------------------
+        %%%%% store fn comments %%%%%
+        /* backlight mapping mode */
+        --------------------------------
+        %%%%% commit message %%%%%
+        commit 0f59858d511960caefb42c4535dc73c2c5f3136c
+        Author: G.Shark Jeong <gshark.jeong@gmail.com>
+        Date:   Thu Oct 4 17:12:55 2012 -0700
+
+            backlight: add new lm3639 backlight driver
+
+            This driver is a general version for LM3639 backlgiht + flash driver chip
+            of TI.
+
+            LM3639:
+            The LM3639 is a single chip LCD Display Backlight driver + white LED
+            Camera driver.  Programming is done over an I2C compatible interface.
+            www.ti.com
+
+            [akpm@linux-foundation.org: code layout tweaks]
+            Signed-off-by: G.Shark Jeong <gshark.jeong@gmail.com>
+            Cc: Richard Purdie <rpurdie@rpsys.net>
+            Cc: Daniel Jeong <daniel.jeong@ti.com>
+            Cc: Randy Dunlap <rdunlap@xenotime.net>
+            Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+            Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+```
 
 ##### What did I learn?
 
@@ -164,6 +226,9 @@ few months.
 ##### What's next?
 
 I am looking a job! I am interested in production / systems / infrastructure
-engineer roles. It would be quite amazing if I get to work on open source. Fun
-fact - I have not been through a job interview in 3 years, so it looks like I am
-going to have some fun :-)
+engineer roles and I can work remotely. It would be quite amazing if I get to
+work on open source. Fun fact - I have not been through a job interview in 3
+years, so it looks like I am going to have some fun :-)
+
+[^1]: The link contains an analysis of undocumented attributes only in the `driver` source files. Possibly outdated.
+[^2]: For anyone who is interested, [this](https://github.com/aishpant/documentation-scripts/blob/master/stats.sh) is the script I used to calculate the number of documented attributes and plotted the graph using [Plotly](https://plot.ly/).
