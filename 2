@@ -1,6 +1,6 @@
 baseURL = "https://aishpant.github.io/"
 languageCode = "en-us"
-title = "Aishwarya Pant's Blog"
+title = "Aishwarya Pant"
 theme = "minimo"
 
 contentDir = "content"
@@ -17,7 +17,6 @@ enableEmoji = true
 
 # Syntax Highlighting ( https://gohugo.io/content-management/syntax-highlighting/ )
 pygmentsCodefences = true
-pygmentsStyle = "monokailight"
 
 # Missing translations will default to this content language
 defaultContentLanguage = "en"
@@ -27,24 +26,23 @@ description = ""
 title404 = "Nothing's here!"
 
 [params.assets]
-favicon = "/images/me.png"
+favicon = "favicon.ico"
 customCSS = ["css/custom.css"]
 customJS = ["js/custom.js"]
 gopher = "" # used in 404 template ( Generator: https://gopherize.me )
 
 [params.settings]
 # date & time format: https://golang.org/pkg/time/
-accentColor = "#FFB6C1"
 dateFormat = "Jan 02, 2006"
 listDateFormat = "Jan 02, 2006"
 hideEntryNavigation = ["page"] # boolean / array of sections
 hideEntryMeta = ["page"] # boolean / array of sections
-recentPostsLength = 7
+recentPostsLength = 5
 hideSocialMenu = false
 showReadingTime = true
 showLastmod = true
-taxonomyCloudShuffle = false
-hideMainMenu = true
+taxonomyCloudShuffle = true
+hideMainMenu = false
 
 [params.sidebar]
 enable = true
@@ -52,32 +50,20 @@ enable = true
 [params.widgets]
 header = ["breadcrumbs"]
 homepage = ["recent_posts"]
-sidebar = ["about","sidebar_menu","taxonomy_cloud"]
+sidebar = ["about","search","sidebar_menu","taxonomy_cloud"]
 footer = ["social_menu"]
 
 [params.seo]
 # Title Separator: - – — · • * ⋆ | ~ « » < >
 titleSeparator = "•"
 
-[params.opengraph.twitter]
-page = "aishpant" 
-
 [params.social]
 email = "aishpant@gmail.com"
 github = "aishpant"
 twitter = "aishpant"
 
-[params.comments]
-enable = false
-
-
-[params.comments.isso]
-enable = false
-scriptSrc = "" # "https://isso.example.com/js/embed.min.js"
-dataAttrs = "" # "data-isso='https://isso.example.com' data-isso-require-author='true'"
-
 [params.social.config]
-platforms = ["github","twitter","email"]
+platforms = ["github","facebook","twitter","instagram","email"]
 
 [taxonomies]
 author = "authors"

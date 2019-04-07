@@ -1,6 +1,6 @@
 [submodule "public"]
 	path = public
-	url = git@github.com:aishpant/aishpant.github.io.git
+	url = https://github.com/aishpant/aishpant.github.io.git
 	branch = master
 [submodule "themes/minimo"]
 	path = themes/minimo
