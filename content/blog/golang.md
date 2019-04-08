@@ -203,3 +203,53 @@ Well, these three have been my small annoyances and gotchas. The focus of [Go
 2](https://github.com/golang/go/wiki/Go2) seems to be on error handling, error
 values and generics. I can't wait to find out what I'll learn in the next 6
 months 😃
+
+##### Edited - Apr 08, 2019
+
+After I shared this post on Twitter, Ruben pointed out another thing about types
+that can be unintuitive. Pointer types can be embedded within non-pointer types,
+which _may_ cause a nil panic if you call a method on the (non-pointer) type.
+This is valid Go.
+
+<div>
+<img src="/images/pointer.png" alt="A tweet in response to this blog pointing out that pointer types can be embedded within non-pointer types, and can panic." style="max-width: 60%;width: 600px;"  width="600" />
+</div>
+
+Consider the following example-
+```go
+package main
+
+import "fmt"
+
+type magicPuppy struct {
+	hungry bool
+}
+
+func (p *magicPuppy) barkSound() string {
+	if p.hungry {
+		return "meow 😿👊"
+	}
+	return "woof woof bork 🐶👅"
+}
+
+// myPuppy has an embedded pointer type of magicPuppy
+type myPuppy struct {
+	*magicPuppy
+}
+
+// barkSound returns the bark sound of the magical puppy
+func (p myPuppy) barkSound() string {
+	return p.magicPuppy.barkSound()
+}
+
+func main() {
+	var c myPuppy
+    // forget to initialise my puppy
+	fmt.Println(c.barkSound()) // nil panic
+}
+```
+
+I find this **behaviour unintuitive** because neither the method receiver or the
+return type of `barkSound` indicate that it is possible to encounter a nil panic
+in this method. You would again have to read its implementation to use it
+correctly.
