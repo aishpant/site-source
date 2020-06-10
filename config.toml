@@ -97,3 +97,8 @@ hrefTargetBlank = true
 lang = "en"
 languageName = "English"
 weight = 1
+
+[[menu.main]]
+   name = "Resume"
+   url = "/docs/resume.pdf"
+   weight = 2.5
